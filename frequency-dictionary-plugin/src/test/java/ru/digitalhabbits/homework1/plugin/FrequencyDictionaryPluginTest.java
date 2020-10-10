@@ -27,21 +27,19 @@ class FrequencyDictionaryPluginTest {
         final String result = plugin.apply(testData.getText());
         assertNotNull(result);
 
-        final Map<String, Integer> wordFrequency = testData.getFrequency(); // was <Integer, String>
+        final Map<String, Integer> wordFrequency = testData.getFrequency();
         for (String line: result.split("\n")) {
-            final Pair<String, Integer> data = splitLine(line); // was <Integer, String>
-            final Integer frequency = wordFrequency.get(data.getKey()); // was data.getValue()
-            assertEquals(frequency, data.getValue(), // was (frequency, data.getKey()
-                    () -> format("Word frequency %s %d not match actual frequency %d",
-                            data.getKey(), data.getValue(), frequency)); // was data.getValue(), data.getKey(), frequency));
+            final Pair<String, Integer> data = splitLine(line);
+            final Integer frequency = wordFrequency.get(data.getKey());
+            assertEquals(frequency, data.getValue(),
+                    () -> format("Word frequency %s %d not match actual frequency %d", data.getKey(), data.getValue(), frequency));
         }
     }
 
-    private Pair<String, Integer> splitLine(@Nonnull String line) { // was <Integer, String>
+    private Pair<String, Integer> splitLine(@Nonnull String line) {
         final Matcher matcher = SPLITTER.matcher(line);
         if (matcher.find()) {
             return Pair.of(matcher.group(1), parseInt(matcher.group(2)));
-            // was return Pair.of(parseInt(matcher.group(1)), matcher.group(2));
         }
         throw new IllegalArgumentException("Result string not match pattern");
     }
